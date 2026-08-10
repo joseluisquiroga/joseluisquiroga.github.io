@@ -13,6 +13,70 @@ evidence_for_the_bible:[],
 universe_the_cosmology_quest:[],
 olive_video_editor_tutorials:[],
 end_of_time_events:[],
+
+lote_suba_2:
+[
+  {
+    "tit": "perturbacion",
+    "lnk": "https://www.youtube.com/watch?v=tyTO8DYPU6s"
+  },
+  {
+    "tit": "00009 daños",
+    "lnk": "https://www.youtube.com/watch?v=2q46g3vmMm8"
+  },
+  {
+    "tit": "00010 testimonio amenza",
+    "lnk": "https://www.youtube.com/watch?v=P-QgL2HlBqw"
+  }
+],
+lote_suba:
+[
+  {
+    "tit": "f2270730",
+    "lnk": "https://www.youtube.com/watch?v=UGgJvukY5iA"
+  },
+  {
+    "tit": "f2776452",
+    "lnk": "https://www.youtube.com/watch?v=1rqP1oO1fc0"
+  },
+  {
+    "tit": "f3103046",
+    "lnk": "https://www.youtube.com/watch?v=B0pYJIVgt5A"
+  },
+  {
+    "tit": "f3299182",
+    "lnk": "https://www.youtube.com/watch?v=aYBZDoBaODU"
+  },
+  {
+    "tit": "f3956124",
+    "lnk": "https://www.youtube.com/watch?v=FRbvOYCaGHU"
+  },
+  {
+    "tit": "f4106134",
+    "lnk": "https://www.youtube.com/watch?v=zn4UB_iY_FY"
+  },
+  {
+    "tit": "f7157542",
+    "lnk": "https://www.youtube.com/watch?v=q4726mUyxkg"
+  },
+  {
+    "tit": "f6938894",
+    "lnk": "https://www.youtube.com/watch?v=55PLBt2svmU"
+  },
+  {
+    "tit": "00009",
+    "lnk": "https://www.youtube.com/watch?v=9kqjW87KdAU"
+  },
+  {
+    "tit": "00010",
+    "lnk": "https://www.youtube.com/watch?v=in5EZxwV4kQ"
+  },
+  {
+    "tit": "00011",
+    "lnk": "https://www.youtube.com/watch?v=fH6KEsy_--E"
+  }
+],
+
 */
 
 export const all_lists = {
@@ -4912,68 +4976,6 @@ metaphors:
   {
     "tit": "Enterprise and ufo metaphor",
     "lnk": "https://www.youtube.com/watch?v=ANixdt1mwXQ"
-  }
-],
-lote_suba_2:
-[
-  {
-    "tit": "perturbacion",
-    "lnk": "https://www.youtube.com/watch?v=tyTO8DYPU6s"
-  },
-  {
-    "tit": "00009 daños",
-    "lnk": "https://www.youtube.com/watch?v=2q46g3vmMm8"
-  },
-  {
-    "tit": "00010 testimonio amenza",
-    "lnk": "https://www.youtube.com/watch?v=P-QgL2HlBqw"
-  }
-],
-lote_suba:
-[
-  {
-    "tit": "f2270730",
-    "lnk": "https://www.youtube.com/watch?v=UGgJvukY5iA"
-  },
-  {
-    "tit": "f2776452",
-    "lnk": "https://www.youtube.com/watch?v=1rqP1oO1fc0"
-  },
-  {
-    "tit": "f3103046",
-    "lnk": "https://www.youtube.com/watch?v=B0pYJIVgt5A"
-  },
-  {
-    "tit": "f3299182",
-    "lnk": "https://www.youtube.com/watch?v=aYBZDoBaODU"
-  },
-  {
-    "tit": "f3956124",
-    "lnk": "https://www.youtube.com/watch?v=FRbvOYCaGHU"
-  },
-  {
-    "tit": "f4106134",
-    "lnk": "https://www.youtube.com/watch?v=zn4UB_iY_FY"
-  },
-  {
-    "tit": "f7157542",
-    "lnk": "https://www.youtube.com/watch?v=q4726mUyxkg"
-  },
-  {
-    "tit": "f6938894",
-    "lnk": "https://www.youtube.com/watch?v=55PLBt2svmU"
-  },
-  {
-    "tit": "00009",
-    "lnk": "https://www.youtube.com/watch?v=9kqjW87KdAU"
-  },
-  {
-    "tit": "00010",
-    "lnk": "https://www.youtube.com/watch?v=in5EZxwV4kQ"
-  },
-  {
-    "tit": "00011",
-    "lnk": "https://www.youtube.com/watch?v=fH6KEsy_--E"
   }
 ],
 ojos:
