@@ -1,0 +1,91 @@
+Los efectos de sonido (SFX) son fundamentales en la edición para guiar la atención, dar ritmo y enfatizar las emociones o la comedia. En YouTube, según el tipo de contenido (educativo, vlogs, comedia, gaming o estilo cinematográfico), existen varios efectos indispensables.
+
+---
+
+## 1. Transiciones y Movimiento
+
+Son los efectos más descargados y utilizados para que un corte de cámara, la aparición de un texto o el cambio de tema no se sientan bruscos.
+
+* **Whoosh / Swoosh (Soplido rápido):** Acompaña zooms rápidos, movimiento de gráficos o pasos de escena.
+* **Whip / Swish:** Un sonido similar al movimiento de un látigo, perfecto para transiciones de tipo *whip pan* o giros rápidos de cámara.
+* **Paper Rip / Page Turn (Romper o pasar papel):** Muy común cuando aparece una textura o cuando un gráfico cambia en pantalla.
+
+---
+
+## 2. Énfasis e Impacto Gráfico
+
+Aportan peso visual cuando aparece un dato clave, una cifra, un título o una revelación importante.
+
+* **Pop / Bubble Pop:** Un sonido suave y rápido al desplegar textos, enlaces, botones de suscripción o tarjetas de información en pantalla.
+* **Cinematic Hit / Bass Drop (Impacto pesado):** Un golpe grave que se usa en momentos de mucha relevancia, dramatismo o revelaciones en vlogs y videos de análisis.
+* **Camera Shutter (Obturador de cámara):** Usado al hacer un fotograma congelado (*freeze frame*), mostrar una captura de pantalla o hacer transiciones de fotos.
+* **Bell / Ding (Campanilla):** Ideal para recalcar una lección, una idea acertada o marcar un ítem en una lista.
+
+---
+
+## 3. Tensión y Expectativa
+
+Preparan al espectador para algo sorprendente o revelador.
+
+* **Riser / Build-Up:** Un sonido ascendente (sintetizador o violín que sube de tono) que genera suspenso justo antes de un resultado o un corte dramático.
+* **Heartbeat (Latido de corazón):** Añade tensión sutil durante retos, momentos de miedo o decisiones difíciles.
+* **Vinyl Scratch / Tape Stop:** Frena el ritmo de forma repentina cuando ocurre algo inesperado o una interrupción cómica.
+
+---
+
+## 4. Reacciones y Comedia (Efectos "Meme")
+
+Esenciales en videos de entretenimiento, *gaming* y bocetos satíricos.
+
+* **Censorship Beep (Pitido de censura):** Usado para tapar groserías o para hacer un chiste visual/auditivo.
+* **Crickets (Grillos):** Marca un silencio incómodo tras un chiste malo o un fallo.
+* **Fail Horn / Sad Trombone (Trombón triste):** Representa un error, un fallo en el juego o una torpeza.
+* **Record Scratch:** El clásico sonido de frenar un disco cuando el narrador se equivoca o se interrumpe la idea.
+* **Recordings de risas o aplausos (Crowd Cheering / Laughter):** Usado para exagerar reacciones en grupo.
+
+---
+
+## 5. Interfaz, Tecnología y Ambiente
+
+Dan realismo y contexto auditivo a demostraciones, tutoriales y grabaciones de pantalla.
+
+* **Mouse Clicks / UI Clicks:** Clics limpios cuando se muestra interactividad en páginas web o software.
+* **Teclado (Keyboard Typing):** Sonido de tecleo rápido mientras se despliega texto en la pantalla o en tomas B-roll de productividad.
+* **Glitch / Digital Distortion:** Usado en transiciones de tecnología, corregir fallos o temas de ciberseguridad.
+
+---
+
+### Buenas prácticas de mezcla
+
+> **Consejo de edición:** Los efectos de transición (como los *whooshes*) deben mezclarse a un nivel sutil (entre **-20 dB** y **-24 dB**) para que se sientan de fondo sin opacar la voz principal. Los impactos (*hits*) para resaltar datos o textos importantes suelen ir algo más presentes (entre **-12 dB** y **-16 dB**).
+
+
+Whoosh
+Swoosh
+Whip
+Swish
+Paper Rip
+Page Turn
+Pop
+Bubble Pop
+Cinematic Hit
+Bass Drop
+Camera Shutter
+Bell
+Ding
+Riser
+Build-Up
+Heartbeat
+Vinyl Scratch
+Tape Stop
+Censorship Beep
+Crickets
+Fail Horn
+Sad Trombone
+Record Scratch
+Recordings de risas
+Recordings de aplausos
+Mouse Clicks
+UI Clicks
+Keyboard Typing
+Glitch

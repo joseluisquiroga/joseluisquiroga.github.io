@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Youtube @JoseLuisQuiroga-com</title>
+    <script src="./gsap.js"></script>
+    <script src="./Flip.js"></script>
+	<script src="./SplitText.js"></script>
+	<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <div class="sidebar" id="sidebar">
+        <!-- Los puntos históricos se acumulan aquí -->
+    </div>
+
+    <div class="stage" id="stage">
+        <!-- El punto activo se inyecta aquí -->
+    </div>
+
+    <div class="controls">
+        <!--button onclick="siguientePunto()">Siguiente Punto</button-->
+        <button id="toggle_sidebar">Ocultar / Mostrar Lista</button>
+    </div>
+
+	<script type="module">
+		import * as actions_md from './v001_niegan_la_resurreccion/niegan_es.js';
+		import * as act_mgr from './actions_mgr.js';
+		window.onload = function() {
+			act_mgr.start_actions(actions_md);
+		}
+	</script>
+</body>
+</html>
+

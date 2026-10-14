@@ -1,0 +1,108 @@
+
+body {
+	margin: 0;
+	padding: 40px;
+	/* background-color: #0b0f19; */
+	background-color: #005500;
+	color: #ffffff;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	/* overflow: hidden; */
+	height: 100vh;
+	display: flex;
+	justify-content: space-between;
+	box-sizing: border-box;
+}
+
+/* Escenario central donde aparece el punto activo */
+.stage {
+	position: relative;
+	width: 55%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Lista lateral acumulativa */
+.sidebar {
+	width: auto;
+	height: auto;
+	background: #005500;
+	border-radius: 16px;
+	padding: 1em;
+	backdrop-filter: blur(12px);
+	/*  border: 1px solid rgba(255, 255, 255, 0.1); */
+	border: 1px solid #ffff00;
+	display: flex;
+	flex-direction: column;
+	gap: 1em;
+	/* box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5); */
+	box-shadow: 0 20px 25px -5px #8a8c21;
+	transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+	max-height: 85vh;
+	align-self: flex-start;
+	/* overflow-y: auto; */
+	/*z-index: 10;*/
+}
+
+.sidebar.hidden {
+	transform: translateX(-130%);
+	opacity: 0;
+}
+
+/* Estilo base compartido para los puntos */
+.point-item {
+	background: linear-gradient(135deg, #0055ff, #0f172a);
+	padding: 16px 20px;
+	border-radius: 10px;
+	font-size: 1.1rem;
+	font-weight: 500;
+	/* box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3); */
+	border: 1px solid #0055ff;
+	box-shadow: 0 10px 15px -3px #002d86;
+	box-sizing: border-box;
+}
+
+/* Cuando está en el escenario central (flotando en absoluto) */
+.stage .point-item {
+	position: absolute;
+	width: auto;
+	max-width: 60%;
+	text-align: left;
+}
+
+/* Cuando pasa a la barra lateral (ocupa el flujo normal) */
+.sidebar .point-item {
+	position: relative;
+	width: 100%;
+	background: linear-gradient(135deg, #0055ff, #0f172a);
+	/* border: 1px solid rgba(59, 130, 246, 0.3); */
+	border: 1px solid #0055ff;
+	font-size: 1rem;
+}
+
+/* Controles flotantes */
+.controls {
+	position: fixed;
+	bottom: 20px;
+	left: 40px;
+	display: flex;
+	gap: 12px;
+	/*z-index: 100;*/
+}
+
+button {
+	padding: 10px 22px;
+	background: #3b82f6;
+	border: none;
+	color: white;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 0.95rem;
+	/* box-shadow: 0 4px 6px rgba(0,0,0,0.2); */
+	box-shadow: 0 4px 6px red;
+	transition: background 0.2s;
+}
+
+button:hover { background: #2563eb; }
