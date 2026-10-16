@@ -10,18 +10,20 @@
 </head>
 <body>
 
-    <div class="sidebar" id="sidebar">
-        <!-- Los puntos históricos se acumulan aquí -->
-    </div>
+	<div id="box" class="container">
+		<div class="sidebar sidebar-pos" id="id_sidebar">
+			<!-- Los puntos históricos se acumulan aquí -->
+		</div>
 
-    <div class="stage" id="stage">
-        <!-- El punto activo se inyecta aquí -->
-    </div>
+		<div class="stage stage-pos" id="id_stage">
+			<!-- El punto activo se inyecta aquí -->
+		</div>
 
-    <div class="controls">
-        <!--button onclick="siguientePunto()">Siguiente Punto</button-->
-        <button id="toggle_sidebar">Ocultar / Mostrar Lista</button>
-    </div>
+		<div class="controls">
+			<!--button onclick="siguientePunto()">Siguiente Punto</button-->
+			<button id="toggle_sidebar">Ocultar / Mostrar Lista</button>
+		</div>
+	</div>
 
 	<script type="module">
 		import * as actions_md from './v001_niegan_la_resurreccion/niegan_es.js';

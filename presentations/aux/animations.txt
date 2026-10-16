@@ -1,0 +1,35 @@
+
+	animation = gsap.from(split.lines, {
+		//rotationX: -100,
+		rotationX: -100,
+		transformOrigin: "50% 50% -160px",
+		opacity: 0,
+		duration: 0.8,
+		ease: "power3",
+		stagger: 0.25
+	});
+
+	animation = gsap.from(split.words, {
+		x: -200,
+		y: -100,
+		opacity: 0,
+		//rotation: "random(-80, 80)",
+		//transformOrigin: "50% 50% -160px",
+		rotation: 90,
+		duration: 2.7,
+		ease: "back",
+		//stagger: 0.15
+		stagger: 0
+	});
+
+	animation = gsap.from(split.chars, {
+		x: 150,
+		//rotation: 90,
+		//rotationX: -100,
+		opacity: 0,
+		duration: 0.7,
+		ease: "power4",
+		stagger: 0.04
+	});
+
+
