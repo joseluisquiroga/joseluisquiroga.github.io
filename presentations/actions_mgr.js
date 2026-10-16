@@ -17,10 +17,18 @@ function do_toggle_sidebar() {
 
 export async function start_actions(){
 	document.addEventListener('keydown', function(ev1) {
-		if (ev1.code === 'Space') {
+		if(ev1.code === 'Space'){
 			ev1.preventDefault();
 
 			//do_next();
+			do_next_action();
+		}
+		if(ev1.key === 'ArrowLeft'){
+			ev1.preventDefault();
+			do_next_action(true);
+		}
+		if(ev1.key === 'ArrowRight'){
+			ev1.preventDefault();
 			do_next_action();
 		}
 	});
@@ -212,15 +220,29 @@ function add_topic(act){
 	const txt = act.tpc.txt;
 	if(txt == null){ console.error(`txt == null`); }
 
-	const nw_itm = document.createElement('div');
-	nw_itm.id = "topic_" + gvar.curr_idx;
-	nw_itm.className = 'point-item';
-	//nw_itm.innerText = str_pt;
-	nw_itm.innerText = txt;
-	nw_itm.prv_divs = [];
+	let itm = act.tpc.tdv;
+	if(itm == null){
+		itm = document.createElement('div');
+		itm.id = "topic_" + gvar.curr_idx;
+		itm.className = 'point-item';
+		//itm.innerText = str_pt;
+		itm.innerText = txt;
+		itm.prv_divs = [];
 
-	act.tpc.tdv = nw_itm;
-	act.dst.appendChild(nw_itm);
+		act.tpc.tdv = itm;
+	}
+	if(act.tpc.tdv.prv_divs == null){ console.error(`act.tpc.tdv.prv_divs == null`); }
+	if(act.tpc.tdv.prv_divs.length != 0){ console.error(`act.tpc.tdv.prv_divs.length != 0`); }
+
+	if(act.is_undo != null){
+		console.log(`UNDO add_topic`);
+		act.is_undo = null;
+		act.tpc.tdv.remove();
+		act.tpc.tdv = null;
+		return;
+	}
+
+	act.dst.appendChild(itm);
 
 	let snd = gvar.sound.swoosh_01;
 	if(snd != null){
@@ -231,7 +253,7 @@ function add_topic(act){
 	}
 
 	// Animación de entrada estilo Animate.css (Zoom/Bounce in)
-	gsap.fromTo(nw_itm,
+	gsap.fromTo(itm,
 		{
 			x: -750,
 			y: -650,
@@ -245,8 +267,8 @@ function add_topic(act){
 		},
 	);
 
-	console.log(nw_itm.id);
-	let split = SplitText.create("#" + nw_itm.id, {type:"chars,words,lines"});
+	console.log(itm.id);
+	let split = SplitText.create("#" + itm.id, {type:"chars,words,lines"});
 
 	let animation;
 	animation && animation.revert();
@@ -267,6 +289,15 @@ function remove_topic(act){
 	if(act.tpc.tdv == null){ console.error(`act.tpc.tdv == null`); }
 
 	const itm = act.tpc.tdv;
+	if(itm.prv_divs == null){ console.error(`itm.prv_divs == null`); }
+
+	if(act.is_undo != null){
+		console.log(`UNDO remove_topic`);
+		act.is_undo = null;
+		const pnt = itm.prv_divs.pop();
+		pnt.appendChild(itm);
+		return;
+	}
 
 	let snd = gvar.sound.swoosh_01;
 	if(snd != null){
@@ -290,6 +321,10 @@ function remove_topic(act){
 		},
 	);
 
+	const src_dv = itm.parentNode;
+	if(src_dv == null){ console.error(`src_dv == null`); }
+
+	itm.prv_divs.push(src_dv);
 	itm.remove();
 }
 
@@ -299,13 +334,23 @@ function move_topic_to_div(act){
 	if(act.dst == null){ console.error(`act.dst == null`); }
 
 	const itm = act.tpc.tdv;
+	if(itm.prv_divs == null){ console.error(`itm.prv_divs == null == null`); }
+
+	if(act.is_undo != null){
+		console.log(`UNDO move_topic_to_div`);
+		act.is_undo = null;
+		const pnt = itm.prv_divs.pop();
+		pnt.appendChild(itm);
+		return;
+	}
+
 	const src_dv = itm.parentNode;
 	if(src_dv == null){ console.error(`src_dv == null`); }
 
 	const state = Flip.getState(itm);
 	act.dst.appendChild(itm);
 
-	if(itm.prv_divs != null){ itm.prv_divs.push(src_dv); }
+	itm.prv_divs.push(src_dv);
 
 	Flip.from(state, {
 		duration: 0.7,
@@ -315,10 +360,16 @@ function move_topic_to_div(act){
 	});
 }
 
-function do_next_action() {
+function do_next_action(do_und) {
 	if(gvar.id_actions == null){ console.error(`gvar.id_actions == null`); }
 	if(gvar.curr_idx == null){
 		gvar.curr_idx = 0;
+	}
+	if(do_und != null){
+		gvar.curr_idx--;
+	}
+	if(gvar.curr_idx < 0){
+		return;
 	}
 	if(gvar.curr_idx >= gvar.id_actions.length){
 		return;
@@ -328,23 +379,15 @@ function do_next_action() {
 	const nxt_act = gvar.actions[nxt_id];
 
 	if(nxt_act.fnc == null){ console.error(`nxt_act.fnc == null`); }
+	if(do_und != null){
+		nxt_act.is_undo = true;
+	}
+
 	nxt_act.fnc(nxt_act);
 
-	gvar.curr_idx++;
-}
-
-function undo_last_action() {
-	if(gvar.id_actions == null){ console.error(`gvar.id_actions == null`); }
-	if(gvar.curr_idx == null){
-		gvar.curr_idx = 0;
+	if(do_und == null){
+		gvar.curr_idx++;
 	}
-	gvar.curr_idx--;
-	if(gvar.curr_idx < 0){
-		return;
-	}
-
-	const prv_id = gvar.id_actions[gvar.curr_idx];
-	const prv_act = gvar.actions[prv_id];
 }
 
 // gurdar historia movimientos en cada imagen y punto
