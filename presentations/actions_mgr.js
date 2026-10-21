@@ -8,11 +8,39 @@ const gvar = {};
 
 function init_containers(){
 	gvar.stage = document.getElementById('id_stage');
+	gvar.stage.classList.add('hidden');
+
 	gvar.sidebar = document.getElementById('id_sidebar');
+	gvar.sidebar.classList.add('hidden');
+}
+
+function hide_container(act) {
+	if(act == null){ console.error(`act == null`); }
+	if(act.dst == null){ console.error(`act.dst == null`); }
+	act.dst.classList.add('hidden');
+}
+
+function show_container(act) {
+	if(act == null){ console.error(`act == null`); }
+	if(act.dst == null){ console.error(`act.dst == null`); }
+	act.dst.classList.remove('hidden');
 }
 
 function do_toggle_sidebar() {
 	gvar.sidebar.classList.toggle('hidden');
+}
+
+function init_cursor(){
+	const dv_cursor = document.createElement('div');
+	dv_cursor.classList.add("cursor");
+	dv_cursor.style.display = "block";
+
+	document.body.appendChild(dv_cursor);
+
+	document.addEventListener("mousemove", (e) => {
+		dv_cursor.style.left = e.clientX + "px";
+		dv_cursor.style.top = e.clientY + "px";
+	});
 }
 
 export async function start_actions(){
@@ -39,6 +67,7 @@ export async function start_actions(){
 	console.log(window.location.href);
 	console.log(window.location.pathname);
 
+	init_cursor();
 	init_containers();
 	init_sounds();
 	init_actions();
@@ -141,6 +170,7 @@ function init_sounds(){
 
 const topics = {
 	t1: {
+		img: './img/boy_gossip.webp',
 		txt: "1. Introducción a la arquitectura del sistema",
 		tdv: null,
 	},
@@ -174,22 +204,35 @@ function init_actions(){
 		a2: {
 			tpc: topics.t1,
 			dst: gvar.sidebar,
-			fnc: move_topic_to_div,
+			//fnc: move_topic_to_div,
+			fnc: remove_topic,
 		},
 		a3: {
 			tpc: topics.t2,
 			dst: gvar.stage,
 			fnc: add_topic,
 		},
+		a3_1: {
+			dst: gvar.sidebar,
+			fnc: show_container,
+		},
 		a4: {
 			tpc: topics.t2,
 			dst: gvar.sidebar,
 			fnc: move_topic_to_div,
 		},
+		a4_1: {
+			dst: gvar.sidebar,
+			fnc: hide_container,
+		},
 		a5: {
 			tpc: topics.t3,
 			dst: gvar.stage,
 			fnc: add_topic,
+		},
+		a5_1: {
+			dst: gvar.sidebar,
+			fnc: show_container,
 		},
 		a6: {
 			tpc: topics.t3,
@@ -217,22 +260,7 @@ function add_topic(act){
 	if(act.tpc == null){ console.error(`act.tpc == null`); }
 	if(act.dst == null){ console.error(`act.dst == null`); }
 
-	const txt = act.tpc.txt;
-	if(txt == null){ console.error(`txt == null`); }
-
-	let itm = act.tpc.tdv;
-	if(itm == null){
-		itm = document.createElement('div');
-		itm.id = "topic_" + gvar.curr_idx;
-		itm.className = 'point-item';
-		//itm.innerText = str_pt;
-		itm.innerText = txt;
-		itm.prv_divs = [];
-
-		act.tpc.tdv = itm;
-	}
-	if(act.tpc.tdv.prv_divs == null){ console.error(`act.tpc.tdv.prv_divs == null`); }
-	if(act.tpc.tdv.prv_divs.length != 0){ console.error(`act.tpc.tdv.prv_divs.length != 0`); }
+	let itm = get_topic(act);
 
 	if(act.is_undo != null){
 		console.log(`UNDO add_topic`);
@@ -242,6 +270,7 @@ function add_topic(act){
 		return;
 	}
 
+	act.tpc.prv_divs = [];
 	act.dst.appendChild(itm);
 
 	let snd = gvar.sound.swoosh_01;
@@ -258,6 +287,7 @@ function add_topic(act){
 			x: -750,
 			y: -650,
 			scale: 0.5, opacity: 0,
+			//scale: 1, opacity: 1,
 		},
 		{
 			x: 0,
@@ -268,6 +298,7 @@ function add_topic(act){
 	);
 
 	console.log(itm.id);
+
 	let split = SplitText.create("#" + itm.id, {type:"chars,words,lines"});
 
 	let animation;
@@ -281,23 +312,32 @@ function add_topic(act){
 		ease: "back",
 		stagger: 0
 	});
+
 }
 
 function remove_topic(act){
 	if(act == null){ console.error(`act == null`); }
 	if(act.tpc == null){ console.error(`act.tpc == null`); }
-	if(act.tpc.tdv == null){ console.error(`act.tpc.tdv == null`); }
 
-	const itm = act.tpc.tdv;
-	if(itm.prv_divs == null){ console.error(`itm.prv_divs == null`); }
+	let itm = act.tpc.tdv;
 
 	if(act.is_undo != null){
 		console.log(`UNDO remove_topic`);
+		if(itm != null){ console.error(`itm != null`); }
+		itm = get_topic(act);
+		act.tpc.tdv = itm;
+
 		act.is_undo = null;
-		const pnt = itm.prv_divs.pop();
-		pnt.appendChild(itm);
+		if(act.tpc.prv_divs.length > 0){
+			const pnt = act.tpc.prv_divs.pop();
+			pnt.appendChild(itm);
+		}
 		return;
 	}
+
+	if(act.tpc.tdv == null){ console.error(`act.tpc.tdv == null`); }
+	if(itm == null){ console.error(`itm == null`); }
+	act.tpc.tdv = null;
 
 	let snd = gvar.sound.swoosh_01;
 	if(snd != null){
@@ -314,18 +354,21 @@ function remove_topic(act){
 			scale: 1, opacity: 1,
 		},
 		{
-			x: -750,
-			y: -650,
+			x: +250,
+			y: +250,
 			scale: 0.5, opacity: 0,
-			duration: 1, ease: "back.out(1.7)"
+			duration: 1, ease: "back.out(1.7)",
+			onComplete: function() {
+				itm.remove();
+			},
 		},
 	);
 
 	const src_dv = itm.parentNode;
 	if(src_dv == null){ console.error(`src_dv == null`); }
 
-	itm.prv_divs.push(src_dv);
-	itm.remove();
+	act.tpc.prv_divs.push(src_dv);
+	//itm.remove();
 }
 
 function move_topic_to_div(act){
@@ -334,12 +377,13 @@ function move_topic_to_div(act){
 	if(act.dst == null){ console.error(`act.dst == null`); }
 
 	const itm = act.tpc.tdv;
-	if(itm.prv_divs == null){ console.error(`itm.prv_divs == null == null`); }
+	if(itm == null){ console.error(`itm == null`); }
+	if(act.tpc.prv_divs == null){ console.error(`act.tpc.prv_divs == null`); }
 
 	if(act.is_undo != null){
 		console.log(`UNDO move_topic_to_div`);
 		act.is_undo = null;
-		const pnt = itm.prv_divs.pop();
+		const pnt = act.tpc.prv_divs.pop();
 		pnt.appendChild(itm);
 		return;
 	}
@@ -350,7 +394,7 @@ function move_topic_to_div(act){
 	const state = Flip.getState(itm);
 	act.dst.appendChild(itm);
 
-	itm.prv_divs.push(src_dv);
+	act.tpc.prv_divs.push(src_dv);
 
 	Flip.from(state, {
 		duration: 0.7,
@@ -369,6 +413,7 @@ function do_next_action(do_und) {
 		gvar.curr_idx--;
 	}
 	if(gvar.curr_idx < 0){
+		gvar.curr_idx = null;
 		return;
 	}
 	if(gvar.curr_idx >= gvar.id_actions.length){
@@ -383,19 +428,83 @@ function do_next_action(do_und) {
 		nxt_act.is_undo = true;
 	}
 
-	nxt_act.fnc(nxt_act);
+	try{
+		nxt_act.fnc(nxt_act);
+	} catch(err) {
+		console.error(`Action ${nxt_id} failed with\n ${err}`);
+	}
 
 	if(do_und == null){
 		gvar.curr_idx++;
 	}
 }
 
+function get_topic(act){
+	if(act == null){ console.error(`act == null`); }
+	if(act.tpc == null){ console.error(`act.tpc == null`); }
+	let dv_itm = act.tpc.tdv;
+	if(dv_itm != null){
+		return dv_itm;
+	}
+
+	const txt = act.tpc.txt;
+	const img = act.tpc.img;
+	if((txt == null) && (img == null)){ console.error(`((txt == null) && (img == null))`); }
+
+	let txt_id = "topic_txt_" + gvar.curr_idx;
+	let dv_txt = null;
+	let dv_img = null;
+	if(txt != null){
+		dv_txt = document.createElement('div');
+		dv_txt.id = txt_id;
+		dv_txt.className = 'point-item';
+		dv_txt.innerText = txt;
+	}
+
+	if(img != null){
+		dv_img = document.createElement('div');
+		dv_img.classList.add("image_container");
+		dv_img.style.width = '20wh';
+		dv_img.style.height = '20vh';
+
+		const imagen = document.createElement('img');
+		imagen.src = img;
+		imagen.style.width = '100%';
+		imagen.style.height = '100%';
+		imagen.style.objectFit = 'contain';
+
+		dv_img.appendChild(imagen);
+	}
+
+	const itm_id = "topic_" + gvar.curr_idx;
+	if((dv_txt != null) && (dv_img == null)){
+		dv_itm = dv_txt;
+		txt_id = itm_id;
+	}
+	if((dv_txt == null) && (dv_img != null)){
+		dv_itm = dv_img;
+	}
+	if((dv_txt != null) && (dv_img != null)){
+		dv_itm = document.createElement('div');
+		dv_itm.classList.add("mix_container");
+
+		dv_img.classList.add("image_grid_pos");
+		dv_txt.classList.add("text_grid_pos");
+
+		dv_itm.appendChild(dv_img);
+		dv_itm.appendChild(dv_txt);
+	}
+	dv_itm.id = itm_id;
+	dv_itm.txt_id = txt_id;
+
+	act.tpc.tdv = dv_itm;
+
+	return dv_itm;
+}
+
 // gurdar historia movimientos en cada imagen y punto
 // show div
 // hide div
-// show topic in div
-// hide topic in div
-// move topic from div to div
 // show image in div
 // hide image in div
 // move image from div to div

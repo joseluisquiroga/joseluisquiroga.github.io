@@ -1,4 +1,9 @@
 
+/* Fuerza a que cualquier elemento dentro de la página mantenga el cursor invisible */
+body, body * {
+  cursor: none !important;
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -20,7 +25,7 @@ html, body {
 .stage-pos {
     position: absolute;
     left: 50%;
-    top: 75vh;
+    bottom: 15vh;
     transform: translateX(-50%);
 }
 
@@ -40,6 +45,30 @@ html, body {
 	max-width: 20vw;
 	max-height: 85vh;
 	align-self: flex-start;
+}
+
+.image_container {
+	overflow: hidden;
+	display: flex;
+	padding: 10px 10px;
+	align-items: center;
+	justify-content: center;
+}
+
+.image_grid_pos {
+	grid-column: 1;
+	grid-row: 1;
+}
+
+.text_grid_pos {
+	grid-column: 1;
+	grid-row: 2;
+}
+
+.mix_container {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto;
 }
 
 .sidebar-pos {
@@ -89,18 +118,22 @@ html, body {
 
 button {
 	padding: 10px 22px;
-	background: #3b82f6;
-	border: none;
-	color: white;
+	background: #005500;
+	border: 1px solid #00ff00;
+	color: #00ff00;
 	border-radius: 8px;
 	cursor: pointer;
 	font-weight: 600;
 	font-size: 0.95rem;
-	box-shadow: 0 4px 6px red;
 	transition: background 0.2s;
 }
 
-button:hover { background: #2563eb; }
+button:hover {
+	background: #00ff00;
+	border: 1px solid #005500;
+	color: #005500;
+
+}
 
 .container {
     position: fixed;
@@ -112,3 +145,14 @@ button:hover { background: #2563eb; }
 	/*border: 1px solid #ff0000;*/
 }
 
+.cursor {
+  position: fixed;
+  width: 16px;
+  height: 16px;
+  background-color: #00ff00; /* El color que quieras */
+  border-radius: 50%;         /* Lo hace redondo (opcional) */
+  pointer-events: none;      /* Evita que bloquee los clics en los botones */
+  transform: translate(-50%, -50%);
+  z-index: 99999;
+  display: none;             /* Oculto hasta que el mouse se mueva */
+}
