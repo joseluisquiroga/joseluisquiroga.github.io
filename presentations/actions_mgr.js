@@ -12,16 +12,29 @@ function init_containers(){
 
 	gvar.sidebar = document.getElementById('id_sidebar');
 	gvar.sidebar.classList.add('hidden');
+
+	gvar.sidebar.addEventListener('transitionend', function(e) {
+		if((e.propertyName === 'transform') && (gvar.current_action != null)){
+			if(gvar.current_action.spc){ send_space_key(); gvar.current_action = null; }
+		}
+	});
+
+	gvar.item1 = document.getElementById('id_item1');
+	gvar.item2 = document.getElementById('id_item2');
+	gvar.item3 = document.getElementById('id_item3');
+	gvar.item4 = document.getElementById('id_item4');
 }
 
 function hide_container(act) {
 	if(act == null){ console.error(`act == null`); }
+	gvar.current_action = act;
 	if(act.dst == null){ console.error(`act.dst == null`); }
 	act.dst.classList.add('hidden');
 }
 
 function show_container(act) {
 	if(act == null){ console.error(`act == null`); }
+	gvar.current_action = act;
 	if(act.dst == null){ console.error(`act.dst == null`); }
 	act.dst.classList.remove('hidden');
 }
@@ -175,38 +188,35 @@ const topics = {
 		tdv: null,
 	},
 	t2: {
-		txt: "2. Configuración óptima de hardware",
+		txt: "La Vida Eterna",
 		tdv: null,
 	},
 	t3: {
-		txt: "3. Optimización de rendimiento en tiempo real",
+		txt: "Muertos",
 		tdv: null,
 	},
 	t4: {
-		txt: "4. Conclusiones y buenas prácticas",
+		txt: "Objeciones",
 		tdv: null,
 	},
-};
-
-const images = {
-	i1: {
-		ref: "./img/",
+	t5: {
+		txt: "Resurreccion",
+		tdv: null,
 	},
 };
 
 function init_actions(){
 	const actions = {
-		a1: {
+		/*a1: {
 			tpc: topics.t1,
 			dst: gvar.stage,
 			fnc: add_topic,
+			spc: true,
 		},
 		a2: {
 			tpc: topics.t1,
-			dst: gvar.sidebar,
-			//fnc: move_topic_to_div,
 			fnc: remove_topic,
-		},
+		},*/
 		a3: {
 			tpc: topics.t2,
 			dst: gvar.stage,
@@ -215,11 +225,13 @@ function init_actions(){
 		a3_1: {
 			dst: gvar.sidebar,
 			fnc: show_container,
+			spc: true,
 		},
 		a4: {
 			tpc: topics.t2,
-			dst: gvar.sidebar,
+			dst: gvar.item1,
 			fnc: move_topic_to_div,
+			spc: true,
 		},
 		a4_1: {
 			dst: gvar.sidebar,
@@ -233,21 +245,57 @@ function init_actions(){
 		a5_1: {
 			dst: gvar.sidebar,
 			fnc: show_container,
+			spc: true,
 		},
 		a6: {
 			tpc: topics.t3,
-			dst: gvar.sidebar,
+			dst: gvar.item2,
 			fnc: move_topic_to_div,
+			spc: true,
+		},
+		a6_1: {
+			dst: gvar.sidebar,
+			fnc: hide_container,
 		},
 		a7: {
 			tpc: topics.t4,
 			dst: gvar.stage,
 			fnc: add_topic,
 		},
-		a8: {
-			tpc: topics.t4,
+		a7_1: {
 			dst: gvar.sidebar,
+			fnc: show_container,
+			spc: true,
+		},
+		a7_2: {
+			tpc: topics.t4,
+			dst: gvar.item3,
 			fnc: move_topic_to_div,
+			spc: true,
+		},
+		a7_3: {
+			dst: gvar.sidebar,
+			fnc: hide_container,
+		},
+		a8: {
+			tpc: topics.t5,
+			dst: gvar.stage,
+			fnc: add_topic,
+		},
+		a8_1: {
+			dst: gvar.sidebar,
+			fnc: show_container,
+			spc: true,
+		},
+		a8_2: {
+			tpc: topics.t5,
+			dst: gvar.item4,
+			fnc: move_topic_to_div,
+			spc: true,
+		},
+		a8_3: {
+			dst: gvar.sidebar,
+			fnc: hide_container,
 		},
 	};
 
@@ -310,7 +358,10 @@ function add_topic(act){
 		rotation: 90,
 		duration: 2.7,
 		ease: "back",
-		stagger: 0
+		stagger: 0,
+		onComplete: function() {
+			if(act.spc){ send_space_key(); }
+		},
 	});
 
 }
@@ -360,6 +411,7 @@ function remove_topic(act){
 			duration: 1, ease: "back.out(1.7)",
 			onComplete: function() {
 				itm.remove();
+				if(act.spc){ send_space_key(); }
 			},
 		},
 	);
@@ -401,6 +453,9 @@ function move_topic_to_div(act){
 		ease: "power2.inOut",
 		absolute: true, // Permite una transición limpia entre contenedores con diferente posicionamiento
 		scale: true,
+		onComplete: function() {
+			if(act.spc){ send_space_key(); }
+		},
 	});
 }
 
@@ -500,6 +555,21 @@ function get_topic(act){
 	act.tpc.tdv = dv_itm;
 
 	return dv_itm;
+}
+
+function send_space_key(elemento = document) {
+    // Evento de presionar
+    const downEvent = new KeyboardEvent('keydown', {
+        key: ' ', code: 'Space', keyCode: 32, which: 32, bubbles: true, cancelable: true
+    });
+
+    // Evento de soltar
+    const upEvent = new KeyboardEvent('keyup', {
+        key: ' ', code: 'Space', keyCode: 32, which: 32, bubbles: true, cancelable: true
+    });
+
+    elemento.dispatchEvent(downEvent);
+    elemento.dispatchEvent(upEvent);
 }
 
 // gurdar historia movimientos en cada imagen y punto
