@@ -1,5 +1,14 @@
 
 
+//import OBSWebSocket from 'obs-websocket-js';
+
+//const obs = new OBSWebSocket();
+
+// Configuración de conexión
+const OBS_ADDRESS = 'ws://127.0.0.1:4455';
+const OBS_PASSWORD = 'msJqnxsD3NGIYVPR'; // Déjalo vacío si no usas contraseña
+
+
 // 2. Registrar explícitamente el plugin Flip en GSAP
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(Flip);
@@ -579,3 +588,28 @@ function send_space_key(elemento = document) {
 // hide image in div
 // move image from div to div
 
+/*
+async function obs_change_scene(nam_sc) {
+  try {
+    // 1. Conectar al servidor de OBS
+    console.log('Connecting to OBS...');
+    await obs.connect(OBS_ADDRESS, OBS_PASSWORD);
+    console.log('¡Conectado exitosamente!');
+
+    // 2. Enviar petición para cambiar la escena activa
+    await obs.call('SetCurrentProgramScene', {
+      sceneName: nam_sc
+    });
+
+    console.log(`Changed to scene: "${nam_sc}"`);
+
+  } catch (error) {
+    console.error('Error while trying to change scene:', error.message || error);
+  } finally {
+    // 3. Desconectar cliente
+    await obs.disconnect();
+    console.log('Desconectado de OBS.');
+  }
+}
+
+*/
