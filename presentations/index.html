@@ -3,53 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Youtube @JoseLuisQuiroga-com</title>
-    <script src="./gsap.js"></script>
-    <script src="./Flip.js"></script>
-	<script src="./SplitText.js"></script>
-	<link rel="stylesheet" href="./style.css">
+	<link rel="stylesheet" href="./glb_style.css">
 </head>
 <body>
-
-	<div id="box" class="container">
-		<div class="sidebar sidebar-pos" id="id_sidebar">
-			<!-- Los puntos históricos se acumulan aquí -->
-			<div class="item_fila">
-				<div class="item_number">1</div>
-				<div id="id_item1" class="item_name">
-				</div>
-			</div>
-			<div class="item_fila">
-				<div class="item_number">2</div>
-				<div id="id_item2" class="item_name">
-				</div>
-			</div>
-			<div class="item_fila">
-				<div class="item_number">3</div>
-				<div id="id_item3" class="item_name">
-				</div>
-			</div>
-			<div class="item_fila">
-				<div class="item_number">4</div>
-				<div id="id_item4" class="item_name">
-				</div>
-			</div>
-		</div>
-
-		<div class="stage stage-pos" id="id_stage">
-			<!-- El punto activo se inyecta aquí -->
-		</div>
-
-		<div class="controls">
-			<!--button onclick="siguientePunto()">Siguiente Punto</button-->
-			<button id="toggle_sidebar">Ocultar / Mostrar Lista</button>
-		</div>
-	</div>
-
+	<h1>
+	<a href="./v001_niegan_la_resurreccion/index.html">v001_niegan_la_resurreccion</a>
+	</h1>
 	<script type="module">
-		import * as actions_md from './v001_niegan_la_resurreccion/niegan_es.js';
-		import * as act_mgr from './actions_mgr.js';
+		import { init_cursor, } from './GLOBAL_CONFIG.js';
 		window.onload = function() {
-			act_mgr.start_actions(actions_md);
+			init_cursor();
 		}
 	</script>
 </body>

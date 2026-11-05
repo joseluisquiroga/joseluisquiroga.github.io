@@ -1,0 +1,214 @@
+
+/* Fuerza a que cualquier elemento dentro de la página mantenga el cursor invisible */
+body, body * {
+  cursor: none !important;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+	background-color: #005500;
+	color: #ffffff;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.prompt {
+	color: #00ff00;
+	width: auto;
+	height: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.prompt-pos {
+    position: absolute;
+    left: 50%;
+    top: 10vh;
+    transform: translateX(-50%);
+}
+
+.stage {
+	width: auto;
+	height: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.stage-pos {
+    position: absolute;
+    left: 50%;
+    bottom: 15vh;
+    transform: translateX(-50%);
+}
+
+/*
+	display: flex;
+	flex-direction: column;
+	align-self: flex-start;
+	*/
+
+.sidebar {
+	width: auto;
+	height: auto;
+	display: grid;
+	grid-template-columns: 2fr 9fr;
+	gap: 1em;
+	margin: 0 auto;
+	background: #005500;
+	border-radius: 16px;
+	padding: 1em;
+	backdrop-filter: blur(12px);
+	border: 1px solid #ffff00;
+	box-shadow: 0 20px 25px -5px #8a8c21;
+	transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+	max-width: 20vw;
+	max-height: 85vh;
+}
+
+.item_fila {
+	display: contents; /* Permite que los hijos directos formen parte del grid principal */
+}
+
+	/*background-image: url('./item_background.jpg');*/
+
+.item_number {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 10hv;
+	height: 10hv;
+	border-radius: 10px;
+	font-family: 'Orbitron', sans-serif;
+	font-size: 2rem;
+	font-weight: 900;
+	font-variant-numeric: tabular-nums;
+	background: linear-gradient(135deg, #013ce7, #000000);
+	background-size: cover;       /* Hace que la imagen cubra todo el espacio disponible */
+	background-position: center;  /* Centra la imagen en el contenedor */
+	background-repeat: no-repeat; /* Evita que la imagen se repita en mosaico */
+	border: 1px solid #0055ff;
+	box-shadow: 0 10px 15px -3px #002d86;
+	box-sizing: border-box;
+	grid-column: 1;
+}
+
+.item_name {
+	grid-column: 2;
+}
+
+.image_container {
+	overflow: hidden;
+	display: flex;
+	padding: 10px 10px;
+	align-items: center;
+	justify-content: center;
+}
+
+.image_grid_pos {
+	grid-column: 1;
+	grid-row: 1;
+}
+
+.text_grid_pos {
+	grid-column: 1;
+	grid-row: 2;
+}
+
+.mix_container {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: auto;
+}
+
+.sidebar-pos {
+    position: absolute;
+    left: 2%;
+    top: 10%;
+}
+
+.sidebar.hidden {
+	transform: translateX(-130%);
+	opacity: 0;
+}
+
+.hide {
+	display: none;
+}
+
+.point-item {
+	background: linear-gradient(135deg, #013ce7, #000000);
+	padding: 16px 20px;
+	border-radius: 10px;
+	font-size: 1.1rem;
+	font-weight: 500;
+	border: 1px solid #0055ff;
+	box-shadow: 0 10px 15px -3px #002d86;
+	box-sizing: border-box;
+}
+
+.stage .point-item {
+	position: relative;
+	width: auto;
+	/*max-width: 60%;*/
+	text-align: left;
+}
+
+.sidebar .point-item {
+	position: relative;
+	width: 100%;
+	background: linear-gradient(135deg, #013ce7, #000000);
+	border: 1px solid #000000;
+	font-size: 1rem;
+}
+
+.controls {
+	position: fixed;
+	bottom: 20px;
+	left: 40px;
+	display: flex;
+	gap: 12px;
+}
+
+button {
+	padding: 10px 22px;
+	background: #005500;
+	color: #00ff00;
+	border: 1px solid #00ff00;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: 600;
+	font-size: 0.95rem;
+	transition: background 0.2s;
+}
+
+button:hover {
+	background: #00ff00;
+	color: #005500;
+	border: 1px solid #005500;
+}
+
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+	/*border: 1px solid #ff0000;*/
+}
+
+.cursor {
+  position: fixed;
+  width: 16px;
+  height: 16px;
+  background-color: #00ff00; /* El color que quieras */
+  border-radius: 50%;         /* Lo hace redondo (opcional) */
+  pointer-events: none;      /* Evita que bloquee los clics en los botones */
+  transform: translate(-50%, -50%);
+  z-index: 99999;
+  display: none;             /* Oculto hasta que el mouse se mueva */
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Youtube @JoseLuisQuiroga-com</title>
+    <script src="../gsap/gsap.js"></script>
+    <script src="../gsap/Flip.js"></script>
+	<script src="../gsap/SplitText.js"></script>
+	<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+	<div id="box" class="container">
+		<div class="prompt prompt-pos" id="id_prompt">
+		</div>
+
+		<div class="sidebar sidebar-pos" id="id_sidebar">
+			<!-- Los puntos históricos se acumulan aquí -->
+			<div class="item_fila">
+				<div class="item_number">0</div>
+				<div id="id_item0" class="item_name">
+				</div>
+			</div>
+			<div class="item_fila">
+				<div class="item_number">1</div>
+				<div id="id_item1" class="item_name">
+				</div>
+			</div>
+			<div class="item_fila">
+				<div class="item_number">2</div>
+				<div id="id_item2" class="item_name">
+				</div>
+			</div>
+			<div class="item_fila">
+				<div class="item_number">3</div>
+				<div id="id_item3" class="item_name">
+				</div>
+			</div>
+			<div class="item_fila">
+				<div class="item_number">4</div>
+				<div id="id_item4" class="item_name">
+				</div>
+			</div>
+		</div>
+
+		<div class="stage stage-pos" id="id_stage">
+			<!-- El punto activo se inyecta aquí -->
+		</div>
+
+		<div class="controls">
+			<!--button onclick="siguientePunto()">Siguiente Punto</button-->
+			<button id="toggle_sidebar">Ocultar / Mostrar Lista</button>
+		</div>
+	</div>
+
+	<script type="module">
+		import * as actions_md from './niegan_es.js';
+		import * as act_mgr from './actions_mgr.js';
+		window.onload = function() {
+			act_mgr.start_actions(actions_md);
+		}
+	</script>
+</body>
+</html>
+

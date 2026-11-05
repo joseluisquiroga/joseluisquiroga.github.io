@@ -1,0 +1,17 @@
+{
+  "name": "presentations",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "comment_type": "commonjs",
+  "type": "module",
+  "dependencies": {
+    "obs-websocket-js": "^5.0.8"
+  },
+  "devDependencies": {
+    "vite": "^8.3.5"
+  }
+}
