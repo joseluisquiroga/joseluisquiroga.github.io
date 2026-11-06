@@ -1,5 +1,5 @@
 
-import { gvar, init_carla_conf, init_obs_conf, init_wobs } from './GLOBAL_CONFIG.js';
+import { gvar, init_carla_conf, init_obs_conf, obs_get_connection } from './GLOBAL_CONFIG.js';
 import { spawn, execSync, exec } from 'node:child_process';
 import { promisify } from 'node:util';
 //import { exec } from 'node:child_process/promises';
@@ -61,10 +61,8 @@ function get_usb_ip() {
 
 // Update OBS Browser Source URL via WebSocket
 async function update_obs_source_url(ipAddress) {
-	const obs = gvar.obs_wsocket;
 	try {
-		await obs.connect(gvar.OBS_CONFIG.address, gvar.OBS_CONFIG.password);
-		console.log(`🔗 [OBS-WebSocket] Connected successfully. Trying to update ${gvar.OBS_CONFIG.rojo}`);
+		const obs = await obs_get_connection();
 
 		await obs.call('SetCurrentProgramScene', {
 			sceneName: "EVERIO",
@@ -92,7 +90,6 @@ async function main() {
 
 	init_carla_conf();
 	init_obs_conf();
-	init_wobs();
 
 	const phoneIP = get_usb_ip();
 	if (phoneIP) {

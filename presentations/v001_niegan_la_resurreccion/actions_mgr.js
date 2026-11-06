@@ -1,5 +1,5 @@
 
-import { gvar, init_obs_conf, init_sounds, send_space_key, obs_change_scene, init_cursor, init_wobs } from '../GLOBAL_CONFIG.js';
+import { gvar, init_obs_conf, init_sounds, send_space_key, obs_change_scene, init_cursor } from '../GLOBAL_CONFIG.js';
 
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(Flip);
@@ -93,7 +93,6 @@ export async function start_actions(){
 	init_sounds();
 	init_actions();
 	init_obs_conf();
-	init_wobs();
 
 	set_prompt();
 }

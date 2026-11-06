@@ -129,33 +129,6 @@ export async function send_space_key(delay_ms = 0, elemento = document) {
     elemento.dispatchEvent(upEvent);
 }
 
-export async function obs_change_scene(act) {
-	if(act == null){ console.error(`act == null`); }
-	if(act.sce == null){ console.error(`act.sce == null`); }
-
-	try {
-		const nam_sc = act.sce;
-		const obs = gvar.obs_wsocket;
-
-		console.log('Connecting to OBS...');
-		await obs.connect(gvar.OBS_CONFIG.address, gvar.OBS_CONFIG.password);
-		console.log('¡Conectado exitosamente!');
-
-		await obs.call('SetCurrentProgramScene', {
-			sceneName: nam_sc
-		});
-
-		console.log(`Changed to scene: "${nam_sc}"`);
-
-	} catch (error) {
-		console.error('Error while trying to change scene:', error.message || error);
-	} finally {
-		// 3. Desconectar cliente
-		await obs.disconnect();
-		console.log('Disconnected from OBS.');
-	}
-}
-
 export function init_cursor(){
 	const dv_cursor = document.createElement('div');
 	dv_cursor.classList.add("cursor");
@@ -169,8 +142,83 @@ export function init_cursor(){
 	});
 }
 
-export function init_wobs(){
-	gvar.obs_wsocket = new OBSWebSocket();
+export async function obs_get_connection(){
+	if(gvar.obs_wsocket == null){
+		gvar.obs_wsocket = new OBSWebSocket();
+		gvar.obs_connected = false;
+
+		gvar.obs_wsocket.on('ConnectionOpened', () => {
+			gvar.obs_connected = true;
+			console.log('Connected to obs.');
+		});
+
+		gvar.obs_wsocket.on('ConnectionClosed', () => {
+			gvar.obs_connected = false;
+			console.log('LOst connection to obs.');
+		});
+	}
+	const obs = gvar.obs_wsocket;
+
+	let ii = 0;
+	for(ii = 0; ii < 10; ii++){
+		try {
+			if(! gvar.obs_connected){
+				await obs.connect(gvar.OBS_CONFIG.address, gvar.OBS_CONFIG.password);
+			}
+			const resp = await obs.call('GetVersion');
+			console.log('OBS conecction ok. versión:', resp.obsVersion);
+			return obs;
+		} catch (err) {
+			console.warn('obs socket failed:', err.message);
+			gvar.obs_connected = false;
+			try { await obs.disconnect(); } catch(err){ console.warn('obs DISCONNECT socket failed:', err.message); }
+		}
+	}
+	console.error('obs not responding');
+	return null;
 }
 
+export async function obs_change_scene(act) {
+	if(act == null){ console.error(`act == null`); }
+	if(act.sce == null){ console.error(`act.sce == null`); }
+
+	try {
+		const nam_sc = act.sce;
+		const obs = await obs_get_connection();
+
+		await obs.call('SetCurrentProgramScene', {
+			sceneName: nam_sc
+		});
+
+		console.log(`Changed to scene: "${nam_sc}"`);
+
+	} catch (error) {
+		console.error('Error while trying to change scene:', error.message || error);
+	}
+}
+
+export async function obs_start_recording() {
+	try {
+		const obs = await obs_get_connection();
+
+		await obs.call('StartRecord');
+		console.log('Recording started');
+
+	} catch (err) {
+		console.error('Error with obs:', err.message);
+	}
+}
+
+export async function obs_stop_recording() {
+	try {
+		const obs = await obs_get_connection();
+		const response = await obs.call('StopRecord');
+
+		console.log('Recording stopped');
+		console.log('Saved file:', response.outputPath);
+
+	} catch (err) {
+		console.error('Error with obs:', err.message);
+	}
+}
 
