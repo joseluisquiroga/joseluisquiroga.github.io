@@ -222,3 +222,16 @@ export async function obs_stop_recording() {
 	}
 }
 
+export function stringify_no_cycles(obj) {
+	const seen = new WeakSet();
+	return JSON.stringify(obj, (key, value) => {
+		if (typeof value === "object" && value !== null) {
+			if(seen.has(value)){
+				return; // O puedes retornar un string como "[Circular]"
+			}
+			seen.add(value);
+		}
+		return value;
+	});
+}
+

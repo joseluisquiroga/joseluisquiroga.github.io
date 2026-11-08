@@ -1,5 +1,9 @@
 
-import { gvar, init_obs_conf, init_sounds, send_space_key, obs_change_scene, init_cursor } from '../GLOBAL_CONFIG.js';
+import { gvar, init_obs_conf, init_sounds, send_space_key, obs_change_scene, init_cursor, stringify_no_cycles } from '../GLOBAL_CONFIG.js';
+
+import { init_lang, } from '../SEBIBLIA/code/sf_lang_mgr.js';
+import { init_biblang, eval_biblang_command, } from '../SEBIBLIA/code/sf_biblang_mgr.js'
+import { fill_verses, } from '../SEBIBLIA/code/sf_search_mgr.js';
 
 gsap.registerPlugin(SplitText);
 gsap.registerPlugin(Flip);
@@ -94,12 +98,16 @@ export async function start_actions(){
 	init_actions();
 	init_obs_conf();
 
+	init_lang('es');
+	init_biblang('es', true);
+
 	set_prompt();
 }
 
 const topics = {
 	t1: {
 		img: '../img/boy_gossip.webp',
+		bib: "mat.5:1-3",
 		txt: "1. Introducción a la arquitectura del sistema",
 		tdv: null,
 	},
@@ -247,12 +255,12 @@ function init_actions(){
 	gvar.id_actions = Object.keys(actions);
 }
 
-function add_topic(act){
+async function add_topic(act){
 	if(act == null){ console.error(`act == null`); }
 	if(act.tpc == null){ console.error(`act.tpc == null`); }
 	if(act.dst == null){ console.error(`act.dst == null`); }
 
-	let itm = get_topic(act);
+	let itm = await get_topic(act);
 
 	if(act.is_undo != null){
 		console.log(`UNDO add_topic`);
@@ -310,7 +318,7 @@ function add_topic(act){
 
 }
 
-function remove_topic(act){
+async function remove_topic(act){
 	if(act == null){ console.error(`act == null`); }
 	if(act.tpc == null){ console.error(`act.tpc == null`); }
 
@@ -319,7 +327,7 @@ function remove_topic(act){
 	if(act.is_undo != null){
 		console.log(`UNDO remove_topic`);
 		if(itm != null){ console.error(`itm != null`); }
-		itm = get_topic(act);
+		itm = await get_topic(act);
 		act.tpc.tdv = itm;
 
 		act.is_undo = null;
@@ -367,7 +375,7 @@ function remove_topic(act){
 	//itm.remove();
 }
 
-function move_topic_to_div(act){
+async function move_topic_to_div(act){
 	if(act == null){ console.error(`act == null`); }
 	if(act.tpc == null){ console.error(`act.tpc == null`); }
 	if(act.dst == null){ console.error(`act.dst == null`); }
@@ -435,7 +443,7 @@ function set_prompt(){
 	const act = gvar.actions[id];
 	if(act == null){ console.error(`act == null`); }
 
-	msg = JSON.stringify(act);
+	msg = stringify_no_cycles(act);
 
 	gvar.prompt.innerText = msg;
 }
@@ -477,7 +485,7 @@ async function do_next_action(do_und) {
 	set_prompt();
 }
 
-function get_topic(act){
+async function get_topic(act){
 	if(act == null){ console.error(`act == null`); }
 	if(act.tpc == null){ console.error(`act.tpc == null`); }
 	let dv_itm = act.tpc.tdv;
@@ -485,9 +493,18 @@ function get_topic(act){
 		return dv_itm;
 	}
 
+	const bib = act.tpc.bib;
+	if(bib != null){
+		const bl_obj = await eval_biblang_command(bib);
+		bl_obj.fill_only_data = true;
+		const all_bibobj = await fill_verses(bl_obj);
+		console.log(all_bibobj);
+	}
+
 	const txt = act.tpc.txt;
 	const img = act.tpc.img;
 	if((txt == null) && (img == null)){ console.error(`((txt == null) && (img == null))`); }
+
 
 	let txt_id = "topic_txt_" + gvar.curr_idx;
 	let dv_txt = null;
